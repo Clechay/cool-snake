@@ -1,0 +1,32 @@
+version: "3.2"
+services:
+  backend:
+    container_name: cs_backend
+    build: ./backend/
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - postgresdb
+
+  postgresdb:
+    container_name: cs_postgresdb
+    image: postgres:11.2
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - cs-pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: "cs"
+
+volumes:
+  cs-pgdata:

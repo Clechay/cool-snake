@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "add": "^2.0.6",
+    "express": "^4.17.1",
+    "knex": "^0.20.8",
+    "nodemon": "^2.0.2",
+    "pg": "^7.17.1",
+    "prettier": "^1.19.1",
+    "socket.io": "^2.3.0",
+    "yarn": "^1.21.1"
+  },
+  "scripts": {
+    "start": "npx nodemon ./index.js"
+  }
+}
