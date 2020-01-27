@@ -10,6 +10,7 @@
     "yarn": "^1.21.1"
   },
   "scripts": {
-    "start": "npx nodemon ./index.js"
+    "start": "npx nodemon ./index.js",
+    "format": "npx prettier --write --single-quote **/*.js"
   }
 }
