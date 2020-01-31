@@ -18,6 +18,10 @@ app.post('/users', (req, res) => {
   User.register(req.body).then( ()=>res.send('ok') )
 });
 
+app.post('/auth', (req, res) => {
+  
+});
+
 io.on('connection', function(socket) {
   console.log('a user connected');
 });
