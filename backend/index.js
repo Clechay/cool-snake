@@ -1,30 +1,29 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 
 const knex = require('./config/db');
 const User = require('./models/user');
+const jwt = require('./util/jwt')
 
+app.use(jwt.middleware);
 app.use(bodyParser.json());
+app.use(require('./util/responseBuilder').middleware);
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+const rooms = require('./controlers/rooms');
+rooms.init(io);
+const users = require('./controlers/users').users;
+const auth = require('./controlers/users').auth;
 
-app.post('/users', (req, res) => {
-  console.log(req);
-  console.error(req.body);
-  User.register(req.body).then( ()=>res.send('ok') )
-});
+app.use('/rooms',rooms.route);
+app.use('/users',users);
+app.use('/auth',auth);
 
-app.post('/auth', (req, res) => {
-  
-});
+app.use(express.static('public'));
 
-io.on('connection', function(socket) {
-  console.log('a user connected');
-});
+
 
 http.listen(5000, function() {
   console.log('listening on *:5000');
