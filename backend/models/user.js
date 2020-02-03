@@ -30,17 +30,18 @@ const User = {
   },
   login: async form => {
     const { login, pass } = form;
-    const users = await db.from('users')
-                          .select('id', 'nick', 'email', 'password_hash', 'password_salt')
-                          .where(function() {
-                            this.where('nick', login).orWhere('email', login);
-                          });
-    if(!users.length) throw 'account missing from db';
+    const users = await db
+      .from('users')
+      .select('id', 'nick', 'email', 'password_hash', 'password_salt')
+      .where(function() {
+        this.where('nick', login).orWhere('email', login);
+      });
+    if (!users.length) throw 'account missing from db';
     const user = users[0];
     console.log(user);
     const providedPassHash = await crypto.hash(pass);
-    if (user.password_hash !== providedPassHash){
-      console.log(`got:${providedPassHash}|expected:${user.password_hash}`)
+    if (user.password_hash !== providedPassHash) {
+      console.log(`got:${providedPassHash}|expected:${user.password_hash}`);
       throw 'wrong password';
     }
     return user;

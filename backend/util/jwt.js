@@ -7,7 +7,7 @@ const verify = token => jwt.verify(token, secret);
 const middleware = (req, res, next) => {
   /** @type {string} */
   let jwtStr = req.headers.authorization;
-  console.log(jwtStr)
+  console.log(jwtStr);
   if (!jwtStr) {
     req.jwt = null;
     next();

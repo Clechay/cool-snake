@@ -31,8 +31,11 @@ auth.post('/login', async (req, res) => {
     const jwt = User.signJWT(user);
     res.success(jwt);
   } catch (error) {
-    console.error('unable to authorize user: ' + JSON.stringify(req.body), error);
-    res.fail('login',error);
+    console.error(
+      'unable to authorize user: ' + JSON.stringify(req.body),
+      error
+    );
+    res.fail('login', error);
   }
 });
 
